@@ -3,9 +3,9 @@
     require_once '../../helpers/utils.php';
 
     // INFORMACION NECESARIA PARA LA ELIMINACION Y REDIRECCION    
-    $entryId = getElementArray($_GET, 'id', null);
-    $redirect = getElementArray($_COOKIE, 'redirectEntries', '../../inicio');
-    $user = getElementArray($_SESSION, 'user', null);
+    $entryId = getCleanTextElementArray($_GET, 'id');
+    $redirect = getNotEmptyElementArray($_COOKIE, 'redirectEntries', '../../inicio');
+    $user = getNotEmptyElementArray($_SESSION, 'user', null);
     $userId = $user ? $user->id : null;
 
     $nameParameter = 'deleteEntry';

@@ -2,7 +2,7 @@
     require_once 'helpers/utils.php';
 
     // OBTENER DATO DE LA BUSQUEDA
-    $search = getElementArray($_GET, 'busqueda', '');      
+    $search = getNotEmptyElementArray($_GET, 'busqueda', '');      
 ?>
 
 <main id="main" class="flex-col gap-lg section">
@@ -19,7 +19,7 @@
         </div>        
     </div>    
     <?php
-        $currentPage = intval(getElementArray($_GET, 'pagina', 1));
+        $currentPage = intval(getIssetElementArray($_GET, 'pagina', 1));
         $users = getUsers(search: $search, currentPage: $currentPage);
         $data = $users['data'];
         $maxPage = $users['maxPage'];

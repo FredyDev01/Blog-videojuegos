@@ -1,6 +1,7 @@
 <?php
     require_once '../../helpers/conexion.php';
-    
+    require_once '../../helpers/utils.php';
+
     // INFORMACION RELACIONADA AL FORMULARIO DE ACTUALIZACION DEL USUARIO
     $updateUserInfo = array(
         'fields' => array(),
@@ -9,21 +10,15 @@
     );
 
     // LIMPIANDO EL TEXTO OBTENIDO
-    $name = isset($_POST['name']) 
-            ? mysqli_real_escape_string($db, trim($_POST['name'])) 
-            : false;
-    $lastName = isset($_POST['lastName']) 
-            ? mysqli_real_escape_string($db, trim($_POST['lastName'])) 
-            : false;
-    $email = isset($_POST['email']) 
-            ? mysqli_real_escape_string($db, trim($_POST['email'])) 
-            : false;
+    $name = getCleanTextElementArray($_POST, 'name');
+    $lastName = getCleanTextElementArray($_POST, 'lastName');
+    $email = getCleanTextElementArray($_POST, 'email');
 
     // VALIDANDO LAS ENTRADAS CON REGEX
-    if(!preg_match('/^[A-Z][a-z]+(\s[A-Z][a-z]+)*$/', $name)) {
+    if(!preg_match('/^[A-Z][\p{L}]+(\s[A-Z][\p{L}]+){0,3}$/', $name)) {
         $updateUserInfo['errors']['name'] = 'El nombre no es valido.';
     }
-    if(!preg_match('/^[A-Z][a-z]+(\s[A-Z][a-z]+)*$/', $lastName)) {
+    if(!preg_match('/^[A-Z][\p{L}]+(\s[A-Z][\p{L}]+){0,3}$/', $lastName)) {
         $updateUserInfo['errors']['lastName'] = 'Los apellidos no son validos.';
     }
     if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {

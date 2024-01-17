@@ -10,18 +10,18 @@
     );
 
     // INFORMACION RELACIONADA A LA EDICION Y REDIRECCION
-    $categoryId = getElementArray($_GET, 'id', null);    
-    $redirect = getElementArray($_COOKIE, 'redirectCategories', '../../gestionar-categorias');
-    $user = getElementArray($_SESSION, 'user', null);
+    $categoryId = getCleanTextElementArray($_GET, 'id');    
+    $redirect = getNotEmptyElementArray($_COOKIE, 'redirectCategories', '../../gestionar-categorias');
+    $user = getNotEmptyElementArray($_SESSION, 'user', null);
     $userRol = $user ? intval($user->rol_id) : null;    
 
     $nameParamter = 'updateCategory';
 
     // LIMPIANDO EL TEXTO OBTENIDO
-    $name = getCleanTextRequest($_POST, 'name');
+    $name = getCleanTextElementArray($_POST, 'name');
 
     // VALIDANDO LAS ENTRADAS CON REGEX
-    if(!preg_match('/^[A-Z][a-z]+$/', $name)) {
+    if(!preg_match('/^[A-Z][\p{L}]+(\s[\p{L}]+){0,3}$/', $name)) {
         $categoryInfo['errors']['name'] = 'El nombre de la categoria no es valido.';
     }
 

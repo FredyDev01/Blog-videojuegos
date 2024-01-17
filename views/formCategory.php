@@ -5,11 +5,15 @@
     $category = null;
     if(isset($_GET['id'])) {
         $category = getCategory($_GET['id']);
+        if(!$category) {
+            header('Location: inicio');
+            exit;
+        }
     }
 
     //DATOS PARA EL FORMULARIO  DE CATEGORIAS
-    $sessionCategory = getElementArray($_SESSION, 'categoryInfo', []);
-    $errors = getValidElementArray($sessionCategory, 'errors', []);
+    $sessionCategory = getNotEmptyElementArray($_SESSION, 'categoryInfo', []);
+    $errors = getNotEmptyElementArray($sessionCategory, 'errors', []);
 
     $name = $category ? $category->nombre : '';
 

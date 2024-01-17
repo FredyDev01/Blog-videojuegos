@@ -4,9 +4,10 @@
 
     if(!$entry) {
         header("Location: inicio");
+        exit;
     }
 
-    $nameCategories = explode(',', $entry->categorias_nombre);
+    $nameCategories = explode(', ', $entry->categorias_nombre);
 ?>
 
 <!--CAJA PRINCIPAL-->

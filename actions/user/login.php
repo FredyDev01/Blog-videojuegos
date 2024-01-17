@@ -3,21 +3,15 @@
     require_once '../../helpers/utils.php';
 
     // INFORMACION RELACIONADA AL FORMULARIO Y REDIRECCION
-    $originPage = getElementArray($_SERVER, 'HTTP_REFERER', null);
+    $originPage = getNotEmptyElementArray($_SERVER, 'HTTP_REFERER', '../../inicio');
     $loginInfo = array(
         'fields' => array(),
         'error' => false
     );
-    
-    $originPage || header('Location: ../index.php');
 
     // LIMPIANDO EL TEXTO OBTENIDO
-    $logEmail = isset($_POST['logEmail'])
-            ? mysqli_real_escape_string($db, trim($_POST['logEmail']))
-            : false;
-    $logPassword = isset($_POST['logPassword'])
-            ? mysqli_real_escape_string($db, trim($_POST['logPassword']))
-            : false;
+    $logEmail = getCleanTextElementArray($_POST, 'logEmail');
+    $logPassword = getCleanTextElementArray($_POST, 'logPassword');
 
     // PREPARACION Y EJECUCION DE LA CONSULTA
     $sql = "SELECT * FROM proyecto_blog_usuarios WHERE email = '$logEmail' LIMIT 1";

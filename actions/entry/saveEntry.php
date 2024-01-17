@@ -10,31 +10,31 @@
     );
 
     // INFORMACION RELACIONADA A LA EDICION
-    $entryId = getElementArray($_GET, 'id', null);    
+    $entryId = getCleanTextElementArray($_GET, 'id');    
     $redirect = "../../entrada?id=$entryId";
-    $user = getElementArray($_SESSION, 'user', null);
+    $user = getNotEmptyElementArray($_SESSION, 'user', null);
     $userId = $user ? $_SESSION['user']->id : null;
     
     $nameParamter = 'updateEntry';
 
     // LIMPIANDO EL TEXTO OBTENIDO
-    $title =  getCleanTextRequest($_POST, 'title');
-    $category = getElementArray($_POST, 'category', []);
-    $description = getCleanTextRequest($_POST, 'description');
+    $title =  getCleanTextElementArray($_POST, 'title');
+    $category = getNotEmptyElementArray($_POST, 'category', []);
+    $description = getCleanTextElementArray($_POST, 'description');
 
     // VALIDANDO LAS ENTRADAS CON REGEX
-    if(!preg_match('/^\w+(\s\w+){0,19}$/', $title)) {
+    if(!preg_match('/^[A-Z][\p{L}]+(\s[\p{L}\d]+){0,50}$/', $title)) {
         $entryInfo['errors']['title'] = 'El titulo de la entrada no es valido.';
     }
     if(empty($category)) {
         $entryInfo['errors']['category'] = 'Debe seleccionar almenos una categoria.';
     }
-    if(!preg_match('/^\w+(\s\w+){0,119}$/', $description)) {
+    if(!preg_match('/^[A-Z].+(\s.+){0,2000}$/', $description)) {
         $entryInfo['errors']['description'] = 'La descripcion de la entrada no es valida.';
     }
 
     // PREPARACION Y EJECUCION DE LA CONSULTA EN CASO DE VALIDAR LOS CAMPOS
-    if(empty($entryInfo['errors']) && isset($_SESSION['user']->id)) {
+    if(empty($entryInfo['errors']) && !empty($_SESSION['user']->id)) {
         $userId = $_SESSION['user']->id;
         mysqli_begin_transaction($db);
         try {                     

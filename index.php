@@ -41,11 +41,11 @@
     // RECOLECTAR INFORMACION UTIL PARA LA PAGINA
     $view = $_GET['view'];
     $title = ucfirst(preg_replace('/-/', ' ', $view));
-    $infoView = getElementArray(VIEWS, $view, []);        
-    $render = getElementArray($infoView, 'render', false);
-    $minRol = getElementArray($infoView, 'min-rol', false);    
-    $currentUser = getElementArray($_SESSION, 'user', null);
-    $currentRol = $currentUser ? intval($currentUser->rol_id) : 0;  
+    $infoView = getNotEmptyElementArray(VIEWS, $view, []);        
+    $render = getNotEmptyElementArray($infoView, 'render', false);
+    $minRol = getIssetElementArray($infoView, 'min-rol', false);    
+    $currentUser = getNotEmptyElementArray($_SESSION, 'user', null);
+    $currentRol = $currentUser ? intval($currentUser->rol_id) : 0;
 
     // REDIRECCIONAR EN CASO NO SE TENGA EL ROL NECESARIO
     if(
@@ -54,12 +54,14 @@
     ) {
         header('Location: inicio');
         exit;
-    }    
+    }
 
     // RENDERIZAR FINAL DE LA PAGINA
+    ob_start();
     require_once 'includes/header.php';
     require_once 'includes/changeSections.php';
     require_once 'views/'.$render.'.php';
     require_once 'includes/aside.php';
     require_once 'includes/footer.php';
+    ob_end_flush();
 ?>

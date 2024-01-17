@@ -2,10 +2,10 @@
     require_once '../../helpers/conexion.php';
     require_once '../../helpers/utils.php';
 
-    $originPage = getElementArray($_SERVER, 'HTTP_REFERER', '../../gestionar-usuarios');
-    $userId = getElementArray($_GET, 'id', null);    
-    $userRol = getElementArray($_GET, 'rol', null);
-    $currentUser = getElementArray($_SESSION, 'user', null);
+    $originPage = getNotEmptyElementArray($_SERVER, 'HTTP_REFERER', '../../gestionar-usuarios');
+    $userId = getIntElementArray($_GET, 'id');    
+    $userRol = getIntElementArray($_GET, 'rol');
+    $currentUser = getNotEmptyElementArray($_SESSION, 'user', null);
     $currentRol = $currentUser ? intval($currentUser->rol_id) : null;
 
     $nameParameter = 'changeRol';    

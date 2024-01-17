@@ -4,7 +4,7 @@
     $userId = $showMyEntries ? $currentUser->id : null;
 
     // OBTENER DATO DE LA BUSQUEDA
-    $search = getElementArray($_GET, 'busqueda', '');
+    $search = getNotEmptyElementArray($_GET, 'busqueda', '');
 ?>
 
 <!--CAJA PRINCIPAL-->
@@ -51,8 +51,8 @@
         ?>
     </div>
     <?php 
-        $categories = getElementArray($_GET, 'categoria', []);
-        $currentPage = intval(getElementArray($_GET, 'pagina', 1));
+        $categories = getNotEmptyElementArray($_GET, 'categoria', []);
+        $currentPage = intval(getIssetElementArray($_GET, 'pagina', 1));
         $entries = getEntries($userId, $search, $categories, $currentPage);
         $data = $entries['data'];
         $maxPage = $entries['maxPage'];

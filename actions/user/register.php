@@ -3,14 +3,12 @@
     require_once '../../helpers/utils.php';
 
     // INFORMACION RELACIONADA AL FORMULARIO DE REGISTRO
-    $originPage = getElementArray($_SERVER, 'HTTP_REFERER', null);
+    $originPage = getNotEmptyElementArray($_SERVER, 'HTTP_REFERER', '../../inicio');
     $registerInfo = array(
         'fields' => array(),
         'errors' => array(),
         'success' => false        
     );
-
-    $originPage || header('Location: ../index.php');
 
     // LIMPIANDO EL TEXTO OBTENIDO
     $regName = isset($_POST['regName']) 

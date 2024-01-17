@@ -3,9 +3,9 @@
     require_once '../../helpers/utils.php';
 
     // INFORMACION NECESARIA PARA LA ELIMINACION Y REDIRECCION    
-    $categoryId = getElementArray($_GET, 'id', null);
-    $originPage = getElementArray($_SERVER, 'HTTP_REFERER', '../../gestionar-categorias');
-    $user = getElementArray($_SESSION, 'user', null);
+    $categoryId = getCleanTextElementArray($_GET, 'id');
+    $originPage = getNotEmptyElementArray($_SERVER, 'HTTP_REFERER', '../../gestionar-categorias');
+    $user = getNotEmptyElementArray($_SESSION, 'user', null);
     $userRol = $user ? intval($user->rol_id) : null;
 
     $nameParameter = 'deleteCategory';

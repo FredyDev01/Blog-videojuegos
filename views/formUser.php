@@ -2,8 +2,8 @@
     require_once 'helpers/utils.php';
 
     //DATOS DEL FORMULARIO DE EDITAR PERFIL
-    $sessionUpdateUser = getElementArray($_SESSION, 'updateUserInfo', []);
-    $errors = getValidElementArray($sessionUpdateUser, 'errors', []);
+    $sessionUpdateUser = getIssetElementArray($_SESSION, 'updateUserInfo', []);
+    $errors = getNotEmptyElementArray($sessionUpdateUser, 'errors', []);
     
     $name = $_SESSION['user']->nombre;
     $lastName = $_SESSION['user']->apellidos;

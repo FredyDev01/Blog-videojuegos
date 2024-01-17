@@ -1,7 +1,7 @@
 <?php
     // DATOS DEL LOGIN
-    $sessionLogin = getElementArray($_SESSION, 'loginInfo', []);
-    
+    $sessionLogin = getIssetElementArray($_SESSION, 'loginInfo', []);
+
     $logEmail = '';
 
     if(!empty($sessionLogin['fields'])) {
@@ -9,8 +9,8 @@
     }
 
     // DATOS DEL REGISTRO
-    $sessionRegister = getElementArray($_SESSION, 'registerInfo', []);
-    $errors = getValidElementArray($sessionRegister, 'errors', []);
+    $sessionRegister = getIssetElementArray($_SESSION, 'registerInfo', []);
+    $errors = getNotEmptyElementArray($sessionRegister, 'errors', []);
 
     $regName = '';
     $regLastName = '';

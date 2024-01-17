@@ -5,11 +5,15 @@
     $entry = null;
     if(isset($_GET['id'])) {
         $entry = getEntry($_GET['id'], $currentUser->id);
+        if(!$entry) {
+            header('Location: inicio');
+            exit;
+        }
     }
 
     //DATOS PARA EL FORMULARIO DE ENTRADAS
-    $sessionCategory = getElementArray($_SESSION, 'entryInfo', []);
-    $errors = getValidElementArray($sessionCategory, 'errors', []);
+    $sessionCategory = getIssetElementArray($_SESSION, 'entryInfo', []);
+    $errors = getNotEmptyElementArray($sessionCategory, 'errors', []);
 
     $title = $entry ? $entry->titulo : '';
     $activeCategories = $entry ? explode(',', $entry->categorias_id) : [];
