@@ -79,7 +79,7 @@
             </div>
             <div id="register" class="block-aside section">
                 <h3 class="title">Registrate</h3>
-                <form action="actions/register.php" method="POST" class="flex-col gap-sm">
+                <form action="actions/user/register.php" method="POST" class="flex-col gap-sm">
                     <div>
                         <label for="regName" class="content">Nombre: </label>
                         <input type="text" name="regName" id="regName" class="form-input" value="<?= $regName ?>">
